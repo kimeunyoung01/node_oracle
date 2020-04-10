@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+          $.ajax("listDept",{success:function(data){
+            $.each(data, function(idx, dept){
+                var tr =$("<tr></tr>");
+                var td1 = $("<td></td>").html(dept.DNO);
+                var td2 = $("<td></td>").html(dept.DNAME);
+                var td3 = $("<td></td>").html(dept.DLOC);
+                $(tr).append(td1,td2,td3);
+                $("#tbody").append(tr);
+            })
+          }})
+      });
+    </script>
+  </head>
+  <body>
+    <table border="1" width="80%">
+        <thead>
+          <tr>
+            <th>부서번호</th>
+            <th>부서명</th>
+            <th>부서위치</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+  </body>
+</html>
