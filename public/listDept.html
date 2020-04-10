@@ -6,9 +6,17 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
       $(function(){
+          var arr;
           $.ajax("listDept",{success:function(data){
+            arr = data;
             $.each(data, function(idx, dept){
-                var tr =$("<tr></tr>");
+                var tr =$("<tr></tr>").attr("idx",idx);
+                $(tr).click(function(){
+                    var i = $(this).attr("idx");
+                    $("#dno").val( arr[i].DNO  );
+                    $("#dname").val( arr[i].DNAME  );
+                    $("#dloc").val( arr[i].DLOC  );
+                });
                 var td1 = $("<td></td>").html(dept.DNO);
                 var td2 = $("<td></td>").html(dept.DNAME);
                 var td3 = $("<td></td>").html(dept.DLOC);
@@ -24,16 +32,31 @@
               }})
           });
 
+          $("#btnEdit").click(function(){
+              var dept = $("#f").serialize();
+              $.ajax("editDept",{data:dept, success:function(r){
+                location.href = "listDept.html";
+              }})
+          });
+
+          $("#btnDelete").click(function(){
+              var dept = $("#f").serialize();
+              $.ajax("deleteDept",{data:dept, success:function(r){
+                location.href = "listDept.html";
+              }})
+          });
       });
     </script>
   </head>
   <body>
     <form id="f">
-      부서번호 : <input type="text" name="dno"><br />
-      부서명 : <input type="text" name="dname"><br />
-      부서위치 : <input type="text" name="dloc"><br />
+      부서번호 : <input type="text" name="dno" id="dno"><br />
+      부서명 : <input type="text" name="dname" id="dname"><br />
+      부서위치 : <input type="text" name="dloc" id="dloc"><br />
     </form>
     <button type="button" name="button" id="btnSave">등록</button>
+    <button type="button" name="button" id="btnEdit">수정</button>
+    <button type="button" name="button" id="btnDelete">삭제</button>
 
     <table border="1" width="80%">
         <thead>
