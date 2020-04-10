@@ -16,10 +16,25 @@
                 $("#tbody").append(tr);
             })
           }})
+
+          $("#btnSave").click(function(){
+              var dept = $("#f").serialize();
+              $.ajax("insertDept",{data:dept, success:function(r){
+                location.href = "listDept.html";
+              }})
+          });
+
       });
     </script>
   </head>
   <body>
+    <form id="f">
+      부서번호 : <input type="text" name="dno"><br />
+      부서명 : <input type="text" name="dname"><br />
+      부서위치 : <input type="text" name="dloc"><br />
+    </form>
+    <button type="button" name="button" id="btnSave">등록</button>
+
     <table border="1" width="80%">
         <thead>
           <tr>
